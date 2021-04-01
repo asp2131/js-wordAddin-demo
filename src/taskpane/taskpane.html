@@ -23,7 +23,7 @@
 <body class="ms-font-m ms-welcome ms-Fabric">
     <header class="ms-welcome__header ms-bgColor-neutralLighter">
         <img width="90" height="90" src="../../assets/logo-filled.png" alt="Contoso" title="Contoso" />
-        <h1 class="ms-font-su">Welcome</h1>
+        <h1 class="ms-font-su">Test Content Controls</h1>
     </header>
     <section id="sideload-msg" class="ms-welcome__main">
         <h2 class="ms-font-xl">Please sideload your add-in to see app body.</h2>
@@ -40,6 +40,16 @@
             </li>
             <li class="ms-ListItem">
                 <button class="ms-Button" id="replace-content-in-control">Rename Service</button><br/><br/>
+            </li>
+            <li class="ms-ListItem">
+                <input id="new-title"></input>
+                <input id="old-title"></input>
+                <button class="ms-Button" id="retitle-content-in-control">Retitle Service</button><br/><br/>
+            </li>
+            <li class="ms-ListItem">
+                <label for="control-type">Enter Control Title</label>
+                <input class="ms-Input" id="control-type"></input>
+                <button class="ms-Button" id="digest-content">Digest Content</button><br/><br/>
             </li>
         </ul>
         <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>

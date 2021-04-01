@@ -16,6 +16,8 @@ Office.onReady(info => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("create-content-control").onclick = createContentControl;
     document.getElementById("replace-content-in-control").onclick = replaceContentInControl; 
+    document.getElementById("retitle-content-in-control").onclick = renameTitleOfControl;
+    document.getElementById("digest-content").onclick = digestContent;
     document.getElementById("run").onclick = run;
   }
 });
@@ -58,12 +60,48 @@ function replaceContentInControl() {
   });
 }
 
+async function renameTitleOfControl(){
+  return Word.run( async context => {
+    const newTitle = document.getElementById("new-title").value;
+    const oldTitle = document.getElementById("old-title").value;
+    console.log(newTitle, oldTitle)
+
+    let contentControls = context.document.contentControls.getByTitle(oldTitle);
+    contentControls.load(`title`);
+  
+    await context.sync();
+    
+    contentControls.items.forEach(sig => {
+      sig.title = newTitle
+      //sig.insertText("Enter Signature Here", "Replace")
+    })
+
+    return context.sync();
+  })
+}
+
+async function digestContent() {
+  await Word.run(async (context) => {
+    const controlTitle = document.getElementById("control-type").value;
+    let contentControls = context.document.contentControls.getByTitle(controlTitle);
+    contentControls.load(`text, title, id`);
+  
+    await context.sync();
+    
+    contentControls.items.forEach(sig => {
+      console.log(`text within ${sig.id} -- ${sig.title}: ${sig.text}`)
+    })
+    
+    await context.sync();
+  });
+}
+
 export async function run() {
   return Word.run(async context => {
     /**
      * Insert your Word code here
      */
-
+    
     // insert a paragraph at the end of the document.
     const paragraph = context.document.body.insertParagraph(`${Math.random() * 10}`, Word.InsertLocation.end);
 
