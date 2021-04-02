@@ -18,6 +18,12 @@
 
     <!-- Template styles -->
     <link href="taskpane.css" rel="stylesheet" type="text/css" />
+
+    <!--Jquery-->
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
 </head>
 
 <body class="ms-font-m ms-welcome ms-Fabric">
@@ -47,9 +53,15 @@
                 <button class="ms-Button" id="retitle-content-in-control">Retitle Service</button><br/><br/>
             </li>
             <li class="ms-ListItem">
-                <label for="control-type">Enter Control Title</label>
-                <input class="ms-Input" id="control-type"></input>
-                <button class="ms-Button" id="digest-content">Digest Content</button><br/><br/>
+                <form>
+                    <h1>Publish presentation</h1>
+                    <br />
+                    <div><input id='submit' type="button" value="Submit" /></div>
+                    <br />
+                    <div><h2>Status</h2> 
+                        <div id="status"></div>
+                    </div>
+                </form>
             </li>
         </ul>
         <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
