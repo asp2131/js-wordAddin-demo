@@ -101,7 +101,6 @@ async function renameTitleOfControl(){
 
 async function digestSignature() {
   return Word.run(async (context) => {
-    var contentControlsPrev
     var serviceNameRange = context.document.getSelection();
     
     serviceNameRange.load('text')
