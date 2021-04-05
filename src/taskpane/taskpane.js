@@ -108,7 +108,6 @@ async function digestSignature() {
     await context.sync();
     if(serviceNameRange.text != ""){
         
-    } 
       var serviceNameContentControl = serviceNameRange.insertContentControl();
       serviceNameContentControl.title = "Signature"
         serviceNameContentControl.tag = "serviceName";
