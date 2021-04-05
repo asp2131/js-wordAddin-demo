@@ -17,7 +17,26 @@ Office.onReady(info => {
     document.getElementById("create-content-control").onclick = createContentControl;
     document.getElementById("replace-content-in-control").onclick = replaceContentInControl; 
     document.getElementById("retitle-content-in-control").onclick = renameTitleOfControl;
-    document.getElementById("digest-content").onclick = digestContent;
+    let executableClass = document.getElementsByClassName("clickable-executable")
+    console.log(executableClass[0].id)
+    for (var i=0; i < executableClass.length; i++) {
+      console.log(executableClass[i].id)
+      let execContext = executableClass[i].id;
+      switch(execContext){
+        case 'signature': 
+          executableClass[i].onclick = digestSignature
+          break;
+        case "date-created":
+          executableClass[i].onclick = digestCreated
+          break;
+        case "time-frame":
+          executableClass[i].onclick = digestTimeFrame
+          break;
+        default:
+          executableClass[i].onclick = digestOther
+      }
+      
+    }
     document.getElementById("run").onclick = run;
   }
 });
@@ -80,19 +99,92 @@ async function renameTitleOfControl(){
   })
 }
 
-async function digestContent() {
-  await Word.run(async (context) => {
-    const controlTitle = document.getElementById("control-type").value;
-    let contentControls = context.document.contentControls.getByTitle(controlTitle);
-    contentControls.load(`text, title, id`);
-  
-    await context.sync();
+async function digestSignature() {
+  return Word.run(async (context) => {
+    var contentControlsPrev
+    var serviceNameRange = context.document.getSelection();
     
-    contentControls.items.forEach(sig => {
-      console.log(`text within ${sig.id} -- ${sig.title}: ${sig.text}`)
-    })
-    
+    serviceNameRange.load('text')
     await context.sync();
+    if(serviceNameRange.text != ""){
+        
+    } 
+      var serviceNameContentControl = serviceNameRange.insertContentControl();
+      serviceNameContentControl.title = "Signature"
+        serviceNameContentControl.tag = "serviceName";
+        serviceNameContentControl.appearance = "Tags";
+        serviceNameContentControl.color = "blue";
+        
+        let inputVal = serviceNameRange.text
+        let inputText = document.getElementById('signature')
+        inputText.value = ''
+        inputText.value += inputVal
+      console.log(serviceNameRange.text)
+    }
+  });
+}
+
+async function digestCreated() {
+  return Word.run(async (context) => {
+    var serviceNameRange = context.document.getSelection();
+    serviceNameRange.load('text')
+    await context.sync();
+    if(serviceNameRange.text != ""){
+      var serviceNameContentControl = serviceNameRange.insertContentControl();
+      serviceNameContentControl.title = "Created At"
+        serviceNameContentControl.tag = "serviceName";
+        serviceNameContentControl.appearance = "Tags";
+        serviceNameContentControl.color = "green";
+        
+        let inputVal = serviceNameRange.text
+        let inputText = document.getElementById('date-created')
+        inputText.value = ''
+        inputText.value += inputVal
+      console.log(serviceNameRange.text)
+    }
+  });
+}
+
+async function digestTimeFrame() {
+  return Word.run(async (context) => {
+    var serviceNameRange = context.document.getSelection();
+    serviceNameRange.load('text')
+    await context.sync();
+    if(serviceNameRange.text != ""){
+      var serviceNameContentControl = serviceNameRange.insertContentControl();
+      serviceNameContentControl.title = "Time Frame"
+        serviceNameContentControl.tag = "serviceName";
+        serviceNameContentControl.appearance = "Tags";
+        serviceNameContentControl.color = "red";
+        
+        let inputVal = serviceNameRange.text
+        let inputText = document.getElementById('time-frame')
+        inputText.value = ''
+        inputText.value += inputVal
+      console.log(serviceNameRange.text)
+    }
+  });
+}
+
+
+async function digestOther() {
+  return Word.run(async (context) => {
+    var serviceNameRange = context.document.getSelection();
+    serviceNameRange.load('text')
+    await context.sync();
+    if(serviceNameRange.text != ""){
+      var serviceNameContentControl = serviceNameRange.insertContentControl();
+      serviceNameContentControl.title = "Other Tags"
+        serviceNameContentControl.tag = "serviceName";
+        serviceNameContentControl.appearance = "Tags";
+        serviceNameContentControl.color = "purple";
+        
+        let inputVal = serviceNameRange.text
+        let inputText = document.getElementById('time-frame')
+        inputText.value = ''
+        inputText.value += inputVal
+      console.log(serviceNameRange.text)
+    }
   });
 }
 
