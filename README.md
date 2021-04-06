@@ -2,6 +2,16 @@
 
 This repository contains the source code used by the [Yo Office generator](https://github.com/OfficeDev/generator-office) when you create a new Office Add-in that appears in the task pane. You can also use this repository as a sample to base your own project from if you choose not to use the generator. 
 
+run npm install
+
+run npm dev-server
+
+- open document in sharepoint -> click the 'Insert' tab at the top -> click the Add-ins button -> click 'Uplod My Add-in' -> a diaolog box will appear -> click browse -> navigate to the repo and select manifest.xml click upload.
+- click the 'Home' tab -> all the way on the right side click the '...' button and select 'Show Taskpane'
+- once the taskpane appears you can create random text with the 'Run' button
+- click the 'submit' button
+- if you spin up a server at localhost:4000 you should be able to recieve the post request from the taskpane.
+
 ## JavaScript
 
 This template is written using JavaScript. For the [TypeScript](http://www.typescriptlang.org/) version of this template, go to [Office-Addin-TaskPane](https://github.com/OfficeDev/Office-Addin-TaskPane).
