@@ -49,10 +49,11 @@ function updateStatus(message) {
 }
 
 function sendFile() {
+  console.log(Office.context.document)
   Office.context.document.getFileAsync("compressed",
       { sliceSize: 100000 },
       function (result) {
-
+          console.log(result)
           if (result.status == Office.AsyncResultStatus.Succeeded) {
 
               // Get the File object from the result.
@@ -62,18 +63,21 @@ function sendFile() {
                   counter: 0,
                   sliceCount: myFile.sliceCount
               };
-
+              console.log('line 65')
               updateStatus("Getting file of " + myFile.size + " bytes");
               getSlice(state);
           }
           else {
+            console.log('line 70')
               updateStatus(result.status);
           }
       });
 }
 
 function getSlice(state) {
+  console.log('getting Slice...')
   state.file.getSliceAsync(state.counter, function (result) {
+    console.log(result)
       if (result.status == Office.AsyncResultStatus.Succeeded) {
           updateStatus("Sending piece " + (state.counter + 1) + " of " + state.sliceCount);
           sendSlice(result.value, state);
@@ -85,6 +89,7 @@ function getSlice(state) {
 }
 
 function sendSlice(slice, state) {
+  console.log('sending slice...')
   var data = slice.data;
 
   // If the slice contains data, create an HTTP request.
@@ -94,7 +99,8 @@ function sendSlice(slice, state) {
       // NOTE: The implementation of myEncodeBase64(input) function isn't
       // included with this example. For information about Base64 encoding with
       // JavaScript, see https://developer.mozilla.org/docs/Web/JavaScript/Base64_encoding_and_decoding.
-      var fileData = myEncodeBase64(data);
+      var fileData = btoa(data);
+      console.log(fileData)
 
       // Create a new HTTP request. You need to send the request
       // to a webpage that can receive a post.
@@ -117,8 +123,9 @@ function sendSlice(slice, state) {
           }
       }
 
-      request.open("POST", "[Your receiving page or service]");
+      request.open("POST", "http://localhost:4000", true);
       request.setRequestHeader("Slice-Number", slice.index);
+      //request.setRequestHeader('Content-Type', 'application/xml')
 
       // Send the file as the body of an HTTP POST
       // request to the web server.
@@ -128,6 +135,7 @@ function sendSlice(slice, state) {
 
 
 function closeFile(state) {
+  console.log('closing file...')
   // Close the file when you're done with it.
   state.file.closeAsync(function (result) {
 
